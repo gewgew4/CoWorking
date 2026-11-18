@@ -14,8 +14,8 @@ internal class Program
 
         var servicios = new ServiceCollection();
         servicios.AgregarInfraestructura();
-
-        // TODO (Punto 3): Registrar ICalculadorTarifa (con la implementación de horario pico) y ReservaServicio en DI.
+        servicios.AddScoped<ICalculadorTarifa, CalculadorTarifaHorarioPico>();
+        servicios.AddScoped<ReservaServicio>();
 
         using var proveedor = servicios.BuildServiceProvider();
         var servicio = proveedor.GetRequiredService<ReservaServicio>();

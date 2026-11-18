@@ -4,7 +4,7 @@ using CoWorking.Domain.Repositorios;
 
 namespace CoWorking.Application.Servicios;
 
-public sealed class ReservaServicio(IReservaRepositorio repositorio)
+public sealed class ReservaServicio(IReservaRepositorio repositorio, ICalculadorTarifa calculador)
 {
     public async Task<Result<ReservaSala>> CrearReservaAsync(
         string salaCódigo,
@@ -12,9 +12,6 @@ public sealed class ReservaServicio(IReservaRepositorio repositorio)
         DateTime inicio,
         int horas)
     {
-        // TODO (Punto 2): Inyectar ICalculadorTarifa por constructor en lugar de usar new aquí.
-        var calculador = new CalculadorTarifaBase();
-
         var resultado = ReservaSala.Crear(salaCódigo, socioDni, inicio, horas, calculador);
         if (resultado.EsFallo)
             return resultado;
